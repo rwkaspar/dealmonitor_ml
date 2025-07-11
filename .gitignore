@@ -138,6 +138,7 @@ celerybeat.pid
 .env
 .envrc
 .venv
+.dealmonitor_ml_venv
 env/
 venv/
 ENV/
