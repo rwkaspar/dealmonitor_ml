@@ -1,6 +1,6 @@
 # generated files from database
-data/raw/*
-data/processed/*
+data/raw/*.jsonl
+data/processed/*.jsonl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -142,7 +142,7 @@ celerybeat.pid
 .env
 .envrc
 .venv
-.dealmonitor_ml_venv
+.dealmonitor*
 env/
 venv/
 ENV/

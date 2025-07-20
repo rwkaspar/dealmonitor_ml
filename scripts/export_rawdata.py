@@ -2,8 +2,6 @@
 import os
 import sys
 from dotenv import load_dotenv
-import json
-import re
 import pandas as pd
 from sqlalchemy import create_engine
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
