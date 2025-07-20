@@ -1,4 +1,30 @@
 import json
+import re
+
+def clean_price_user(value):
+    # Direkt akzeptieren, wenn bereits Float
+    if isinstance(value, (float, int)):
+        return float(value)
+    
+    # Ansonsten Parsen aus String
+    if not isinstance(value, str):
+        return None
+
+    import re
+    cleaned = re.sub(r"[^\d,.\-]", "", value.strip())
+
+    if ',' in cleaned and '.' in cleaned:
+        if cleaned.rfind('.') < cleaned.rfind(','):
+            cleaned = cleaned.replace('.', '').replace(',', '.')
+        else:
+            cleaned = cleaned.replace(',', '')
+    elif ',' in cleaned:
+        cleaned = cleaned.replace(',', '.')
+
+    try:
+        return float(cleaned)
+    except:
+        return None
 
 def flatten_sample(raw):
     """
