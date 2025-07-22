@@ -2,6 +2,12 @@
 data/raw/*.jsonl
 data/processed/*.jsonl
 
+# generated models
+models/*.pkl
+
+# reports
+reports/*.html
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

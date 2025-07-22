@@ -1,12 +1,11 @@
 import json
 import re
+from bs4 import BeautifulSoup
 
 def clean_price_user(value):
-    # Direkt akzeptieren, wenn bereits Float
     if isinstance(value, (float, int)):
         return float(value)
-    
-    # Ansonsten Parsen aus String
+
     if not isinstance(value, str):
         return None
 
@@ -25,6 +24,40 @@ def clean_price_user(value):
         return float(cleaned)
     except:
         return None
+    
+def extract_features(row):
+    features = {}
+
+    html = row.get("content_html") or ""
+    dom = row.get("snapshot_dom") or ""
+    xhrs = row.get("xhrs") or {}
+    lang = row.get("user_language") or ""
+    ua = row.get("user_agent") or ""
+
+    # HTML-basiert
+    features["html_len"] = len(html)
+    features["num_currency_tokens"] = len(re.findall(r"(€|\$|USD|EUR)", html))
+    features["num_price_patterns"] = len(re.findall(r"\d{1,3}([.,]\d{3})*([.,]\d{2})?", html))
+
+    # DOM
+    features["dom_len"] = len(dom)
+    features["dom_price_patterns"] = len(re.findall(r"\d{1,3}([.,]\d{3})*([.,]\d{2})?", dom))
+
+    # XHRs (string to dict if necessary)
+    if isinstance(xhrs, str):
+        try:
+            xhrs = json.loads(xhrs)
+        except:
+            xhrs = {}
+    xhr_str = json.dumps(xhrs)
+    features["xhrs_price_keys"] = sum(1 for k in xhr_str.split('"') if "price" in k.lower())
+
+    # Optionen
+    features["lang_de"] = int(lang.startswith("de"))
+    features["ua_mobile"] = int("mobile" in ua.lower())
+
+    return features
+
 
 def flatten_sample(raw):
     """

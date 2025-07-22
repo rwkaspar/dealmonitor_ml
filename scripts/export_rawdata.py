@@ -10,7 +10,7 @@ from src.features import clean_price_user
 
 
 # load_dotenv()  # lädt .env aus aktuellem Verzeichnis
-load_dotenv(dotenv_path="/home/dev/projects/dealmonitor_ml/.env")
+load_dotenv(dotenv_path="/home/dev/projects/dealmonitor_ml_clean/.env")
 print("Database URL:", os.getenv("DATABASE_URL"))
 db_url = os.getenv("DATABASE_URL")
 
@@ -19,6 +19,7 @@ db_pass = os.getenv("db_pass")
 db_host = os.getenv("db_host")
 db_port = os.getenv("db_port")
 db_name = os.getenv("db_name")
+print(f"Connecting to database {db_name} at {db_host}:{db_port} as user {db_user}")
 # DATABASE_URL=postgresql+psycopg2://dev_user:dev_password@db-dev:5432/dev_db
 engine = create_engine(f"postgresql+psycopg2://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}")
 
@@ -45,7 +46,8 @@ df["price_user_clean"] = df["price_user"].apply(clean_price_user)
 df = df[df["price_user_clean"].notnull()]
 
 # JSONL (für LLMs etc.)
-df.to_json("data/raw/tracker_data.jsonl", orient="records", lines=True)
+df.to_json("data/raw/raw_data.jsonl", orient="records", lines=True)
+print(f"Exported {len(df)} rows to data/raw/raw_data.jsonl")
 
 # def export_rawdata_jsonl(out_path="data/raw/rawdata_export.jsonl"):
 #     session = SessionLocal()
