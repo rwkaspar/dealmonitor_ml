@@ -2,8 +2,10 @@
 data/raw/*.jsonl
 data/processed/*.jsonl
 
-# generated models
-models/*.pkl
+# generated models beside the latest model
+models/nn_model_*.pkl
+models/knn_model.pkl
+models/price_model.pkl
 
 # reports
 reports/*.html
