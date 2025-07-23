@@ -1,6 +1,6 @@
 from typing import List, Dict
-from src.candidate_extractor import extract_price_candidates
-from src.features import clean_price_user
+from .candidate_extractor import extract_price_candidates
+from .features import clean_price_user
 
 
 def build_knn_training_rows(raw_row: dict) -> List[Dict]:

@@ -1,5 +1,7 @@
 bs4
 dotenv
+imblearn
+jinja2
 matplotlib
 pandas
 pip-tools

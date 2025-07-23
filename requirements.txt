@@ -20,15 +20,26 @@ dotenv==0.9.9
     # via -r requirements.in
 fonttools==4.59.0
     # via matplotlib
+imbalanced-learn==0.12.4
+    # via imblearn
+imblearn==0.0
+    # via -r requirements.in
+jinja2==3.1.6
+    # via -r requirements.in
 joblib==1.5.1
-    # via scikit-learn
+    # via
+    #   imbalanced-learn
+    #   scikit-learn
 kiwisolver==1.4.8
     # via matplotlib
+markupsafe==3.0.2
+    # via jinja2
 matplotlib==3.10.3
     # via -r requirements.in
 numpy==2.3.1
     # via
     #   contourpy
+    #   imbalanced-learn
     #   matplotlib
     #   pandas
     #   scikit-learn
@@ -60,15 +71,21 @@ python-dotenv==1.1.1
 pytz==2025.2
     # via pandas
 scikit-learn==1.7.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   imbalanced-learn
 scipy==1.16.0
-    # via scikit-learn
+    # via
+    #   imbalanced-learn
+    #   scikit-learn
 six==1.17.0
     # via python-dateutil
 soupsieve==2.7
     # via beautifulsoup4
 threadpoolctl==3.6.0
-    # via scikit-learn
+    # via
+    #   imbalanced-learn
+    #   scikit-learn
 typing-extensions==4.14.1
     # via beautifulsoup4
 tzdata==2025.2

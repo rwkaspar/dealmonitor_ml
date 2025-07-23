@@ -1,6 +1,5 @@
 import json
 import re
-from bs4 import BeautifulSoup
 
 def clean_price_user(value):
     if isinstance(value, (float, int)):

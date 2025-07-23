@@ -1,10 +1,12 @@
 import pandas as pd
 import joblib
-from src.candidate_extractor import extract_price_candidates
-from src.features import clean_price_user
+from pathlib import Path
+from .candidate_extractor import extract_price_candidates
+from .features import clean_price_user
 
+MODEL_PATH = Path(__file__).parent.parent / "models" / "nn_model.pkl"
 
-def predict_best_candidate_nn(raw_row: dict, model_path: str = "models/nn_model.pkl", top_n: int = 5):
+def predict_best_candidate_nn(raw_row: dict, model_path: str = MODEL_PATH, top_n: int = 5):
     model = joblib.load(model_path)
 
     candidates = extract_price_candidates(

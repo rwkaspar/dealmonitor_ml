@@ -1,7 +1,7 @@
 import pandas as pd
 import joblib
-from src.candidate_extractor import extract_price_candidates
-from src.features import clean_price_user
+from .candidate_extractor import extract_price_candidates
+from .features import clean_price_user
 
 
 def predict_best_candidate(raw_row: dict, model_path: str = "models/knn_model.pkl") -> float | None:
