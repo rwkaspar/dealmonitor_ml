@@ -44,11 +44,12 @@ def train_nn_model(
 
 
     model = MLPClassifier(
-        hidden_layer_sizes=(64, 32),
-        activation="relu",
+        hidden_layer_sizes=(128, 64, 32),
+        activation="tanh",  # for more data relu, alternative: logistic
         solver="adam",
-        max_iter=200,
+        max_iter=1000,
         random_state=42,
+        learning_rate_init=0.001,
     )
 
     model.fit(X_train, y_train)
