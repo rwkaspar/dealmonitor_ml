@@ -20,6 +20,8 @@ dotenv==0.9.9
     # via -r requirements.in
 fonttools==4.59.0
     # via matplotlib
+greenlet==3.2.3
+    # via sqlalchemy
 imbalanced-learn==0.12.4
     # via imblearn
 imblearn==0.0
@@ -82,12 +84,16 @@ six==1.17.0
     # via python-dateutil
 soupsieve==2.7
     # via beautifulsoup4
+sqlalchemy==2.0.41
+    # via -r requirements.in
 threadpoolctl==3.6.0
     # via
     #   imbalanced-learn
     #   scikit-learn
 typing-extensions==4.14.1
-    # via beautifulsoup4
+    # via
+    #   beautifulsoup4
+    #   sqlalchemy
 tzdata==2025.2
     # via pandas
 wheel==0.45.1

@@ -6,4 +6,6 @@ matplotlib
 pandas
 pip-tools
 psycopg2-binary
-scikit-learn
+pyarrow
+scikit-learn==1.6.1  # no support for 1.7.1 yet by imblearn
+SQLAlchemy
