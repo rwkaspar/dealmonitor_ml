@@ -6,7 +6,7 @@ from .features import clean_price_user
 
 MODEL_PATH = Path(__file__).parent.parent / "models" / "nn_model.pkl"
 
-def predict_best_candidate_nn(raw_row: dict, model_path: str = MODEL_PATH, top_n: int = 5): # type: ignore
+def predict_best_candidate_nn(raw_row: dict, model_path: str = MODEL_PATH, top_n: int = 3): # type: ignore
     model = joblib.load(model_path)
 
     candidates = extract_price_candidates(
@@ -14,12 +14,15 @@ def predict_best_candidate_nn(raw_row: dict, model_path: str = MODEL_PATH, top_n
         raw_row.get("xhrs", {})
     )
 
+    unique_prices = set()
     rows = []
     for cand in candidates:
         value_clean = clean_price_user(cand["value_raw"])
         if value_clean is None:
             continue
-
+        if value_clean in unique_prices:
+            continue
+        unique_prices.add(value_clean)
         row = {
             "value_clean": value_clean,
             "depth": cand.get("depth", -1),
@@ -27,6 +30,8 @@ def predict_best_candidate_nn(raw_row: dict, model_path: str = MODEL_PATH, top_n
             "has_currency": int("€" in cand["value_raw"] or "$" in cand["value_raw"]),
         }
         rows.append((row, value_clean, cand))
+        if len(rows) >= top_n:
+            break
 
     if not rows:
         return None, []
