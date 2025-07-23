@@ -1,0 +1,7 @@
+# ml/pyproject.toml
+[project]
+name = "dealmonitor_ml"
+version = "0.1.0"
+description = "ML library for Dealmonitor"
+authors = [{name = "Robert Kaspar"}]
+dependencies = []
