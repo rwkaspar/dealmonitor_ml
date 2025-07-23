@@ -54,7 +54,7 @@ pillow==11.3.0
     # via matplotlib
 pip-tools==7.4.1
     # via -r requirements.in
-psycopg2==2.9.10
+psycopg2-binary==2.9.10
     # via -r requirements.in
 pyparsing==3.2.3
     # via matplotlib

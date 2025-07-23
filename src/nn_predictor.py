@@ -6,7 +6,7 @@ from .features import clean_price_user
 
 MODEL_PATH = Path(__file__).parent.parent / "models" / "nn_model.pkl"
 
-def predict_best_candidate_nn(raw_row: dict, model_path: str = MODEL_PATH, top_n: int = 5):
+def predict_best_candidate_nn(raw_row: dict, model_path: str = MODEL_PATH, top_n: int = 5): # type: ignore
     model = joblib.load(model_path)
 
     candidates = extract_price_candidates(

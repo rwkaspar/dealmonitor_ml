@@ -5,5 +5,5 @@ jinja2
 matplotlib
 pandas
 pip-tools
-psycopg2
+psycopg2-binary
 scikit-learn
