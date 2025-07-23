@@ -58,6 +58,8 @@ pip-tools==7.4.1
     # via -r requirements.in
 psycopg2-binary==2.9.10
     # via -r requirements.in
+pyarrow==21.0.0
+    # via -r requirements.in
 pyparsing==3.2.3
     # via matplotlib
 pyproject-hooks==1.2.0
@@ -72,7 +74,7 @@ python-dotenv==1.1.1
     # via dotenv
 pytz==2025.2
     # via pandas
-scikit-learn==1.7.1
+scikit-learn==1.6.1
     # via
     #   -r requirements.in
     #   imbalanced-learn
