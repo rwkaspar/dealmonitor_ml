@@ -49,6 +49,7 @@ def predict_best_candidate_nn(raw_row: dict, model_path: str = MODEL_PATH, top_n
 
     best = ranked[0]
     top = ranked[:top_n]
+    logger.debug("Price candidates: %s", top)
 
     best_price = round(best[0], 2)
     best_meta = best[2]
