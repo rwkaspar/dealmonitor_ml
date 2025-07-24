@@ -1,8 +1,11 @@
+import logging
 import pandas as pd
 import joblib
 from pathlib import Path
 from .candidate_extractor import extract_price_candidates
 from .features import clean_price_user
+
+logger = logging.getLogger(__name__)
 
 MODEL_PATH = Path(__file__).parent.parent / "models" / "nn_model.pkl"
 
@@ -29,6 +32,7 @@ def predict_best_candidate_nn(raw_row: dict, model_path: str = MODEL_PATH, top_n
             "css_len": len(cand.get("css_class", "")),
             "has_currency": int("€" in cand["value_raw"] or "$" in cand["value_raw"]),
         }
+        logger.debug("Candidate row:", row)
         rows.append((row, value_clean, cand))
         if len(rows) >= top_n:
             break

@@ -1,10 +1,12 @@
+import logging
 import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from lightgbm import LGBMRegressor
-from ...dealmonitor_ml_backup.src.features import extract_features, clean_price_user
+from .features import extract_features, clean_price_user
 
+logger = logging.getLogger(__name__)
 
 def train_model(data_path: str, model_path: str = "models/price_model.pkl"):
     # Lade vorbereitete Daten

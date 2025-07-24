@@ -1,7 +1,9 @@
+import logging
 from typing import List, Dict
 from .candidate_extractor import extract_price_candidates
 from .features import clean_price_user
 
+logger = logging.getLogger(__name__)
 
 def build_knn_training_rows(raw_row: dict) -> List[Dict]:
     """

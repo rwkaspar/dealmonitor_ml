@@ -1,9 +1,11 @@
 import joblib
 import pandas as pd
+import logging
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score
 
+logger = logging.getLogger(__name__)
 
 def train_knn_model(data_path: str, model_path: str = "models/knn_model.pkl"):
     df = pd.read_parquet(data_path)

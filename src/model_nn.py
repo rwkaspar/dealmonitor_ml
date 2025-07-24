@@ -4,12 +4,14 @@ import numpy as np
 import joblib
 from datetime import datetime
 import shutil
+import logging
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.neural_network import MLPClassifier
 
 from imblearn.over_sampling import RandomOverSampler
 
+logger = logging.getLogger(__name__)
 
 def train_nn_model(
     data_path: str = "data/knn_training_set.parquet",
@@ -44,7 +46,7 @@ def train_nn_model(
 
 
     model = MLPClassifier(
-        hidden_layer_sizes=(128, 64, 32),
+        hidden_layer_sizes=(256, 128, 64, 32),
         activation="tanh",  # for more data relu, alternative: logistic
         solver="adam",
         max_iter=1000,

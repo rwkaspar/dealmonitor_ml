@@ -1,5 +1,8 @@
 import json
 import re
+import logging
+
+logger = logging.getLogger(__name__)
 
 def clean_price_user(value):
     if isinstance(value, (float, int)):

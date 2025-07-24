@@ -1,8 +1,10 @@
 import re
 import json
+import logging
 from bs4 import BeautifulSoup
 from typing import List, Dict, Any
 
+logger = logging.getLogger(__name__)
 
 def extract_price_candidates(content_html: str, xhrs: Any = None) -> List[Dict]:
     """

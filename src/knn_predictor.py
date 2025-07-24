@@ -1,8 +1,10 @@
 import pandas as pd
 import joblib
+import logging
 from .candidate_extractor import extract_price_candidates
 from .features import clean_price_user
 
+logger = logging.getLogger(__name__)
 
 def predict_best_candidate(raw_row: dict, model_path: str = "models/knn_model.pkl") -> float | None:
     model = joblib.load(model_path)

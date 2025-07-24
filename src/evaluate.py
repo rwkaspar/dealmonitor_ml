@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
 import joblib
+import logging
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import matplotlib.pyplot as plt
 
+logger = logging.getLogger(__name__)
 
 def evaluate_model(model_path: str, data_path: str, max_points: int = 1000):
     model = joblib.load(model_path)
