@@ -1,10 +1,8 @@
 import re
 import json
-import logging
 from bs4 import BeautifulSoup
 from typing import List, Dict, Any
 
-logger = logging.getLogger(__name__)
 
 def extract_price_candidates(content_html: str, xhrs: Any = None) -> List[Dict]:
     """
@@ -16,8 +14,21 @@ def extract_price_candidates(content_html: str, xhrs: Any = None) -> List[Dict]:
     if content_html:
         soup = BeautifulSoup(content_html, "html.parser")
 
-        # Alle Textnodes mit Preisen
-        price_pattern = re.compile(r"\d{1,4}([.,]\d{3})*([.,]\d{2})")  # z. B. 1.399,00
+        # All text nodes containing prices
+        price_pattern = re.compile(
+            r"""
+            (
+                (?:[A-Z]{3}\s*)?
+                [€$£¥₹₽₩₪฿₺₫₴₦₲₵₡₢₳₭₮₰₱₲₳₤₥₧₯₶₸₺₻₼₽₾₿₠₡₢₣₤₥₦₧₨₩₪₫₭₮₯₰₱₲₳₴₵₶₷₸₺₻₼₽₾₿]?
+                \s*[-]?
+                (?:\d{1,3}([.,'\s]\d{3})*|\d+)
+                ([.,]\d{2})?
+                \s*[€$£¥₹₽₩₪฿₺₫₴₦₲₵₡₢₳₭₮₰₱₲₳₤₥₧₯₶₸₺₻₼₽₾₿]?
+                (?:\s*[A-Z]{3})?
+            )
+            """,
+            re.VERBOSE
+        )
 
         for el in soup.find_all(text=price_pattern):
             text = el.strip() # type: ignore
