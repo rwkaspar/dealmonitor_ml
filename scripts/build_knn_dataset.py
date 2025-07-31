@@ -14,4 +14,5 @@ with open("data/raw/raw_data.jsonl", "r") as f:
 
 df = pd.DataFrame(rows)
 df.to_parquet("data/knn_training_set.parquet")
+df.to_csv("data/knn_training_set.csv", index=False)
 print(f"✅ {len(df)} Trainingspunkte gespeichert.")

@@ -28,6 +28,7 @@ def build_knn_training_rows(raw_row: dict) -> List[Dict]:
         match = abs(value_clean - price_user_clean) < 0.01  # Toleranz bei Float-Vergleich
 
         row = {
+            "raw_data_id": raw_row.get("id", ""),
             "source": cand.get("source"),
             "value_clean": value_clean,
             "match_with_user": int(match),

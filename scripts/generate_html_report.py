@@ -8,10 +8,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from src.features import clean_price_user
 
 
-# 🔍 Load latest prediction file
+# Load latest prediction file
 pred_dir = "predictions"
-latest = sorted(os.listdir(pred_dir))[-1]
-path = os.path.join(pred_dir, latest)
+path = os.path.join(pred_dir, "predictions_latest.jsonl")
 
 print(f"🧾 Generating report for {path}...")
 
@@ -22,11 +21,20 @@ with open(path) as f:
 # Clean & format
 for row in data:
     row["price_user_clean"] = clean_price_user(row.get("price_user"))
-    row["is_hit"] = abs((row.get("price_user_clean") or 0) - (row.get("predicted_price") or -999)) < 0.01
+    pred_price = row.get("predicted_price", None)
+
+    try:
+        row["is_hit"] = abs((row["price_user_clean"] or 0) - (pred_price or -999)) < 0.01
+        row["price_predicted"] = pred_price
+    except Exception:
+        row["is_hit"] = False
+        row["price_predicted"] = None
 
     top = row.get("top_candidates", [])[:3]
     row["top_html"] = []
-    for val, score in top:
+    for entry in top:
+        val = entry[0]
+        score = entry[1]
         match = abs((row.get("price_user_clean") or 0) - val) < 0.01
         row["top_html"].append({
             "val": f"{val:.2f}",
@@ -57,7 +65,7 @@ template = Template("""
     <table>
         <thead>
             <tr>
-                <th>URL</th>
+                <th>Fingerprint</th>
                 <th>User Price</th>
                 <th>Predicted</th>
                 <th>Top 3 Candidates</th>
@@ -66,9 +74,9 @@ template = Template("""
         <tbody>
         {% for row in data %}
             <tr class="{{ 'hit' if row.is_hit else 'miss' }}">
-                <td>{{ row.url }}</td>
+                <td>{{ row.fingerprint }}</td>
                 <td>{{ row.price_user_clean }}</td>
-                <td>{{ row.predicted_price }}</td>
+                <td>{{ row.price_predicted }}</td>
                 <td>
                     {% for cand in row.top_html %}
                         <div class="{{ 'match' if cand.match else 'nomatch' }}">
@@ -88,8 +96,22 @@ template = Template("""
 os.makedirs("reports", exist_ok=True)
 timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
 out_path = f"reports/report_{timestamp}.html"
+latest_path = "reports/report_latest.html"
 
 with open(out_path, "w") as f:
-    f.write(template.render(data=data, date=timestamp))
+    try:
+        f.write(template.render(data=data, date=timestamp))
+    except Exception as e:
+        print(f"⚠️ Error rendering template: {e}")
+        f.write("<h1>Error generating report</h1>")
+        f.write(f"<p>{e}</p>")
+
+with open(latest_path, "w") as f:
+    try:
+        f.write(template.render(data=data, date=timestamp))
+    except Exception as e:
+        print(f"⚠️ Error rendering template: {e}")
+        f.write("<h1>Error generating report</h1>")
+        f.write(f"<p>{e}</p>")
 
 print(f"✅ Report saved to {out_path}")

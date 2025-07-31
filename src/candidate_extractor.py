@@ -1,8 +1,37 @@
 import re
 import json
 from bs4 import BeautifulSoup
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Union
 
+
+def extract_all_candidates(raw_data: Union[List[Dict], "pd.DataFrame"]) -> List[Dict]:
+    """
+    Extract all price candidates from raw_data (either list of dicts or DataFrame).
+    Each candidate will include: value_raw, source, outer_html, tag, css_class, depth, raw_data_id, created_at
+    """
+    if hasattr(raw_data, "to_dict"):
+        raw_data = raw_data.to_dict(orient="records")
+
+    candidates = []
+
+    for row in raw_data:
+        html = row.get("content_html", "")
+        xhrs = row.get("xhrs")
+        raw_data_id = row.get("id")
+        created_at = row.get("created_at")
+        fingerprint = row.get("fingerprint")
+        price_user = row.get("price_user")
+
+        found = extract_price_candidates(html, xhrs)
+
+        for c in found:
+            c["raw_data_id"] = raw_data_id
+            c["created_at"] = created_at
+            c["fingerprint"] = fingerprint
+            c["price_user"] = price_user
+            candidates.append(c)
+
+    return candidates
 
 def extract_price_candidates(content_html: str, xhrs: Any = None) -> List[Dict]:
     """

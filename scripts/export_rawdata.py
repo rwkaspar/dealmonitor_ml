@@ -39,7 +39,7 @@ JOIN urls u ON u.tracker_id = t.id
 LEFT JOIN price_history p ON p.tracker_id = t.id
 """
 
-df = pd.read_sql("SELECT * FROM raw_data ORDER BY created_at", engine, index_col="id")
+df = pd.read_sql("SELECT * FROM raw_data ORDER BY created_at", engine)
 
 # convert 
 df["price_user_clean"] = df["price_user"].apply(clean_price_user)

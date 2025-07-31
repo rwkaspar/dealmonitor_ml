@@ -1,14 +1,21 @@
 # generated files from database
 data/raw/*.jsonl
 data/processed/*.jsonl
+*.csv
+*.parquet
 
 # generated models beside the latest model
 models/nn_model_*.pkl
 models/knn_model.pkl
 models/price_model.pkl
 
+# predictions
+predictions/*.jsonl
+!predictions/predictions_latest.jsonl
+
 # reports
 reports/*.html
+!reports/report_latest.html
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
