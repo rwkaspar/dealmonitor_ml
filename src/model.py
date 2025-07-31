@@ -37,14 +37,3 @@ def train_model(data_path: str, model_path: str = "models/price_model.pkl"):
     joblib.dump(model, model_path)
     print(f"✅ Modell gespeichert unter {model_path}")
 
-
-def predict_price(sample_row: dict, model_path: str = "models/price_model.pkl") -> float:
-    """
-    Erwartet ein Dictionary mit denselben Keys wie raw_data.jsonl
-    Gibt den vorhergesagten Preis zurück (float)
-    """
-    model = joblib.load(model_path)
-    features = extract_features(sample_row)
-    X = pd.DataFrame([features])
-    prediction = model.predict(X)[0]
-    return round(prediction, 2)
