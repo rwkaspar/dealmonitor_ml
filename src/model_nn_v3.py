@@ -5,6 +5,7 @@ import joblib
 from datetime import datetime
 import shutil
 import logging
+from dvc_s3 import S3FileSystem
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.neural_network import MLPClassifier, MLPRegressor
@@ -14,6 +15,9 @@ from imblearn.over_sampling import RandomOverSampler
 from .features import extract_price_features  # use your features.py
 
 logger = logging.getLogger(__name__)
+
+MODEL_LATEST = "models/model_latest.pkl"
+MODEL_BEST = "models/model_best.pkl"
 
 
 def build_feature_df(df=pd.DataFrame()) -> pd.DataFrame:
@@ -162,7 +166,7 @@ def train_nn_model(
     shutil.copy(model_path, versioned_model_path)
 
     # Update symlink
-    symlink_path = os.path.join(os.path.dirname(model_path), "nn_model_latest.pkl")
+    symlink_path = os.path.join(os.path.dirname(model_path), "model_latest.pkl")
     try:
         if os.path.exists(symlink_path):
             os.remove(symlink_path)

@@ -1,5 +1,6 @@
 bs4
 dotenv
+dvc[s3]
 imblearn
 jinja2
 matplotlib
