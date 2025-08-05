@@ -5,7 +5,7 @@ import joblib
 from datetime import datetime
 import shutil
 import logging
-from dvc_s3 import S3FileSystem
+import subprocess
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.neural_network import MLPClassifier, MLPRegressor
@@ -159,6 +159,11 @@ def train_nn_model(
     if update_best:
         joblib.dump(model, best_model_path)
         print(f"🏆 New best model saved at {best_model_path}")
+        subprocess.run(["dvc", "add", "models/model_best.pkl"])
+        subprocess.run(["git", "add", "models/model_best.pkl.dvc", ".gitignore"])
+        commit = 'Add/update best and latest model'
+    else:
+        commit = 'Add/update latest model'
 
     # Save versioned model
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -173,6 +178,10 @@ def train_nn_model(
         os.symlink(os.path.abspath(model_path), symlink_path)
     except Exception as e:
         print(f"⚠️ Could not update symlink: {e}")
+    subprocess.run(["dvc", "add", "models/model_latest.pkl"])
+    subprocess.run(["git", "add", "models/model_latest.pkl.dvc", ".gitignore"])
+    subprocess.run(["git", "commit", "-m", commit])
+    subprocess.run(["dvc", "push"])
 
     print(f"✅ Versioned model saved as {versioned_model_path}")
     print(f"🔗 Symlink updated: {symlink_path}")
