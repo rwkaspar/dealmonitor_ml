@@ -1,9 +1,11 @@
 bs4
+dagshub
 dotenv
 dvc[s3]
 imblearn
 jinja2
 matplotlib
+mlflow
 pandas
 pip-tools
 psycopg2-binary
