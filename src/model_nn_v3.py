@@ -79,8 +79,6 @@ def train_nn_model(
         X_test, y_test = X_resampled[test_mask], y_resampled[test_mask]
         meta_test = meta_resampled[test_mask].copy()
 
-
-
         # Modell & Params als Param loggen
         model = HistGradientBoostingClassifier(
             max_iter=5000,
@@ -128,8 +126,11 @@ def train_nn_model(
 
         # Modell speichern & als Artefakt loggen
         joblib.dump(model, model_path)
+        mlflow.set_tag("model_version", "latest")
+        mlflow.set_tag("model_path", "models/model_latest.pkl")
         mlflow.sklearn.log_model(
             sk_model=model,
+            registered_model_name="DealMonitorNN",
             artifact_path="sklearn-model",
             signature=signature,
             input_example=input_example
