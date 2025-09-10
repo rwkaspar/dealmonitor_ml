@@ -65,7 +65,7 @@ template = Template("""
     <table>
         <thead>
             <tr>
-                <th>Fingerprint</th>
+                <th>URL</th>
                 <th>User Price</th>
                 <th>Predicted</th>
                 <th>Top 3 Candidates</th>
@@ -74,7 +74,7 @@ template = Template("""
         <tbody>
         {% for row in data %}
             <tr class="{{ 'hit' if row.is_hit else 'miss' }}">
-                <td>{{ row.fingerprint }}</td>
+                <td>{{ row.url[:100] }}</td>
                 <td>{{ row.price_user_clean }}</td>
                 <td>{{ row.price_predicted }}</td>
                 <td>

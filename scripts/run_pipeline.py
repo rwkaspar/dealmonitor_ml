@@ -3,10 +3,10 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 import pandas as pd
 from sqlalchemy import create_engine
-from src.features import clean_price_user
-from src.candidate_extractor import extract_price_candidates
+# from src.features import clean_price_user
+# from src.candidate_extractor import extract_price_candidates
 from src.knn_dataset_builder import build_knn_training_rows
-from src.model_nn import train_nn_model
+from src.model_nn_v3 import train_nn_model
 
 
 # 1. Connect to the PostgreSQL database

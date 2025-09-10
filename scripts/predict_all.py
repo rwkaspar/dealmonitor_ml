@@ -40,12 +40,13 @@ for i, raw_row in enumerate(raw_df.itertuples()):
     sorted_cands = sorted(candidates, key=lambda c: c.get("proba", 0), reverse=True)
     top_candidates = sorted_cands[:3]
     pred_price = top_candidates[0]["value_clean"] if top_candidates else None
-    expected_price = updated_row.get("value_clean", None)
+    expected_price = updated_row.get("target", None)
     is_hit = any(abs(expected_price - c["value_clean"]) < 0.01 for c in top_candidates if expected_price is not None)
 
     # Fingerprint, created_at, etc. holen (optional: nachbauen falls nötig)
     results.append({
         "raw_data_id": updated_row.get("id"),
+        "url": updated_row.get("url"),
         "fingerprint": updated_row.get("fingerprint", ""),
         "price_user": expected_price,
         "predicted_price": pred_price,

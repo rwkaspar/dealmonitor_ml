@@ -63,10 +63,10 @@ def predict_best_candidate_nn(row: dict):
     return best_price, top_candidates
 
 def predict_best_candidates_nn_from_row(row: dict):
-    logger.info(f"Predicting best candidates for row ID: {row.get('id', 'unknown')}")
-    price_user = row.get("price_user", None)
-    price_user_clean = clean_price_user(price_user)
-    row['value_clean'] = price_user_clean
+    logger.info(f"Predicting best candidates for row url: {row.get('url', 'unknown')}")
+    # price_user = row.get("price_user", None)
+    # price_user_clean = clean_price_user(price_user)
+    # row['value_clean'] = price_user_clean
 
     candidates = extract_price_candidates(row['content_html'], row['xhrs'])
     results = []
@@ -74,18 +74,18 @@ def predict_best_candidates_nn_from_row(row: dict):
         value_clean = clean_price_user(cand["value_raw"])
         if value_clean is None:
             continue
-        match = abs(value_clean - price_user_clean) < 0.01
+        # match = abs(value_clean - price_user_clean) < 0.01
 
         cand_with_features = {
             "raw_data_id": row.get("id", ""),
             "source": cand.get("source"),
             "value_clean": value_clean,
-            "match_with_user": int(match),
+            # "match_with_user": int(match),
             "depth": cand.get("depth", -1),
             "tag": cand.get("tag", ""),
             "css_len": len(cand.get("css_class", "")),
             "has_currency": int("€" in cand["value_raw"] or "$" in cand["value_raw"]),
-            "price_user": price_user_clean,
+            # "price_user": price_user_clean,
         }
         results.append(cand_with_features)
     row['candidates'] = results

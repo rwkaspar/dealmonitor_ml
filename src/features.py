@@ -78,8 +78,8 @@ def extract_price_features(row: dict) -> dict:
     tag_is_del = tag_lower == "del"
 
     # Relative price info
-    price_diff_abs = abs(value_clean - price_user)
-    price_diff_ratio = price_diff_abs / price_user if price_user > 0 else 0.0
+    # price_diff_abs = abs(value_clean - price_user)
+    # price_diff_ratio = price_diff_abs / price_user if price_user > 0 else 0.0
 
     # Other
     selector_length = int(row.get("css_len", 0))
@@ -102,8 +102,8 @@ def extract_price_features(row: dict) -> dict:
         "tag_is_div": int(tag_is_div),
         "tag_is_ins": int(tag_is_ins),
         "tag_is_del": int(tag_is_del),
-        "price_diff_abs": price_diff_abs,
-        "price_diff_ratio": price_diff_ratio
+        # "price_diff_abs": price_diff_abs,
+        # "price_diff_ratio": price_diff_ratio
     }
 
 

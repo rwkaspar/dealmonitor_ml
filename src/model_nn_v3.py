@@ -80,11 +80,55 @@ def train_nn_model(
         meta_test = meta_resampled[test_mask].copy()
 
         # Modell & Params als Param loggen
-        model = HistGradientBoostingClassifier(
-            max_iter=5000,
-            early_stopping=True,
-            random_state=42
+        # model = HistGradientBoostingClassifier(
+        #     max_iter=5000,
+        #     early_stopping=True,
+        #     random_state=42
+        # )
+
+# Models: NN, XGBoost, LightGBM, CatBoost, RandomForest, ExtraTrees, AdaBoost, HistGradientBoosting
+        from sklearn.neural_network import MLPClassifier
+        model = MLPClassifier(
+            hidden_layer_sizes=(256, 128, 64, 32),
+            activation="tanh",
+            solver="adam",
+            max_iter=10000,
+            random_state=42,
+            learning_rate_init=0.001,
         )
+
+        # from xgboost import XGBClassifier
+        # model = XGBClassifier(
+        #     n_estimators=1000,
+        #     learning_rate=0.01,
+        #     max_depth=6,
+        #     subsample=0.8,
+        #     colsample_bytree=0.8,
+        #     reg_alpha=0.1,
+        #     reg_lambda=1,
+        #     random_state=42,
+        #     # early_stopping_rounds=50
+        # )
+
+
+        # from xgboost import XGBClassifier
+        # model = XGBClassifier(n_estimators=500, use_label_encoder=False, eval_metric='logloss', random_state=42)
+
+        # from lightgbm import LGBMClassifier
+        # model = LGBMClassifier(n_estimators=500, random_state=42)
+
+        # from catboost import CatBoostClassifier
+        # model = CatBoostClassifier(iterations=500, random_state=42, verbose=0)
+
+        # from sklearn.ensemble import RandomForestClassifier
+        # model = RandomForestClassifier(n_estimators=500, random_state=42)
+
+        # from sklearn.ensemble import ExtraTreesClassifier
+        # model = ExtraTreesClassifier(n_estimators=500, random_state=42)
+
+        # from sklearn.ensemble import AdaBoostClassifier
+        # model = AdaBoostClassifier(n_estimators=500, random_state=42)
+
         mlflow.log_params(model.get_params())
 
         model.fit(X_train, y_train)
@@ -201,4 +245,4 @@ def train_nn_model(
 
 
 if __name__ == "__main__":
-    train_nn_model()
+    train_nn_model(data_path="data/knn_training_set.parquet", model_path="models/nn_model.pkl")

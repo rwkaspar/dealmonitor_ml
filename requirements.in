@@ -1,9 +1,11 @@
 bs4
+catboost
 dagshub
 dotenv
 dvc[s3]
 imblearn
 jinja2
+lightgbm
 matplotlib
 mlflow
 pandas
@@ -12,3 +14,4 @@ psycopg2-binary
 pyarrow
 scikit-learn==1.6.1  # no support for 1.7.1 yet by imblearn
 SQLAlchemy
+xgboost
