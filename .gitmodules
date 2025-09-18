@@ -1,0 +1,3 @@
+[submodule "dealmonitor"]
+	path = dealmonitor
+	url = git@github.com:rwkaspar/dealmonitor.git
