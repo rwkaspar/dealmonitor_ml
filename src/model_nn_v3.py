@@ -1,3 +1,4 @@
+import sys
 import os
 import pandas as pd
 import numpy as np
@@ -7,16 +8,20 @@ import shutil
 import logging
 import subprocess
 import dotenv
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.ensemble import HistGradientBoostingClassifier
+# from imbalance-learn import 
 from imblearn.over_sampling import RandomOverSampler
 import mlflow
 import mlflow.sklearn
 from mlflow.models.signature import infer_signature
 import dagshub
 
-from .features import extract_price_features  # use your features.py
+# from .features import extract_price_features  # use your features.py
+
+sys.path.append(os.path.abspath("dealmonitor/backend/src"))
+from dealmonitor.features.features import extract_price_features
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +61,12 @@ def train_nn_model(
         X_full = X_full.reset_index(drop=True)
         y = df["match_with_user"].astype(int)
 
+        # One-Hot-Encoding domain feature
+        if "domain" in X_full.columns:
+            domain_dummies = pd.get_dummies(X_full["domain"], prefix="domain")
+            X_full = X_full.drop(columns=["domain"])
+            X_full = pd.concat([X_full, domain_dummies], axis=1)
+
         meta_cols = ["raw_data_id", "price_user", "value_clean"]
         X_full["raw_data_id"] = df["raw_data_id"].values
         X_full["price_user"] = df["price_user"].values
@@ -88,14 +99,47 @@ def train_nn_model(
 
 # Models: NN, XGBoost, LightGBM, CatBoost, RandomForest, ExtraTrees, AdaBoost, HistGradientBoosting
         from sklearn.neural_network import MLPClassifier
-        model = MLPClassifier(
-            hidden_layer_sizes=(256, 128, 64, 32),
-            activation="tanh",
-            solver="adam",
-            max_iter=10000,
-            random_state=42,
-            learning_rate_init=0.001,
+        # model = MLPClassifier(
+        #     hidden_layer_sizes=(256, 128, 64, 32),
+        #     activation="tanh",
+        #     solver="adam",
+        #     max_iter=10000,
+        #     random_state=42,
+        #     learning_rate_init=0.001,
+        # )
+
+        # Definiere das Basis-Modell
+        model = MLPClassifier(random_state=42, max_iter=10000)
+
+        # Definiere den Suchraum für Hyperparameter
+        param_grid = {
+            'hidden_layer_sizes': [(64,), (128, 64), (256, 128, 64)],
+            'activation': ['relu', 'tanh', 'logistic'],
+            'solver': ['adam', 'sgd'],
+            'alpha': [0.0001, 0.001],
+            'learning_rate_init': [0.001, 0.01]
+        }
+
+        # Initialisiere Grid Search mit Cross-Validation (z.B. 3-fach CV)
+        grid_search = GridSearchCV(
+            estimator=model,
+            param_grid=param_grid,
+            scoring='f1',
+            n_jobs=-1,
+            cv=3,
+            verbose=2
         )
+
+        # X_train, y_train sind deine Trainingsdaten (bereits vorbereitet)
+        grid_search.fit(X_train, y_train)
+
+        print("Best parameters set found on development set:")
+        print(grid_search.best_params_)
+
+        print("Best CV score:")
+        print(grid_search.best_score_)
+
+        best_model = grid_search.best_estimator_
 
         # from xgboost import XGBClassifier
         # model = XGBClassifier(

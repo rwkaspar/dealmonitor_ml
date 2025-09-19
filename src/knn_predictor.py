@@ -1,8 +1,14 @@
+import sys
+import os
 import pandas as pd
 import joblib
 import logging
-from .candidate_extractor import extract_price_candidates
-from .features import clean_price_user
+# from .candidate_extractor import extract_price_candidates
+# from .features import clean_price_user
+
+sys.path.append(os.path.abspath("dealmonitor/backend/src"))
+from dealmonitor.features.features import clean_price
+from dealmonitor.price_logic.candidate_extractor import extract_price_candidates
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +22,8 @@ def predict_best_candidate(raw_row: dict, model_path: str = "models/knn_model.pk
 
     rows = []
     for cand in candidates:
-        value_clean = clean_price_user(cand["value_raw"])
+        # value_clean = clean_price_user(cand["value_raw"])
+        value_clean = clean_price(cand["value_raw"])
         if value_clean is None:
             continue
 
@@ -44,7 +51,8 @@ def predict_best_candidate_with_debug(raw_row: dict, model_path: str = "models/k
 
     rows = []
     for cand in candidates:
-        value_clean = clean_price_user(cand["value_raw"])
+        # value_clean = clean_price_user(cand["value_raw"])
+        value_clean = clean_price(cand["value_raw"])
         if value_clean is None:
             continue
 

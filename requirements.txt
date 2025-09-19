@@ -38,7 +38,6 @@ anyio==4.10.0
     # via
     #   gql
     #   httpx
-    #   starlette
 appdirs==1.4.4
     # via
     #   dagshub
@@ -74,11 +73,6 @@ bs4==0.0.2
     # via -r requirements.in
 build==1.2.2.post1
     # via pip-tools
-cachetools==5.5.2
-    # via
-    #   google-auth
-    #   mlflow-skinny
-    #   mlflow-tracing
 catboost==1.2.8
     # via -r requirements.in
 celery==5.5.3
@@ -103,11 +97,11 @@ click==8.2.1
     #   click-plugins
     #   click-repl
     #   dagshub
+    #   databricks-cli
     #   flask
-    #   mlflow-skinny
+    #   mlflow
     #   pip-tools
     #   typer
-    #   uvicorn
 click-didyoumean==0.3.1
     # via celery
 click-plugins==1.1.1.2
@@ -115,7 +109,7 @@ click-plugins==1.1.1.2
 click-repl==0.3.0
     # via celery
 cloudpickle==3.1.1
-    # via mlflow-skinny
+    # via mlflow
 colorama==0.4.6
     # via dvc
 configobj==5.0.9
@@ -132,10 +126,8 @@ dagshub==0.6.2
     # via -r requirements.in
 dagshub-annotation-converter==0.1.11
     # via dagshub
-databricks-sdk==0.61.0
-    # via
-    #   mlflow-skinny
-    #   mlflow-tracing
+databricks-cli==0.18.0
+    # via mlflow
 dataclasses-json==0.6.7
     # via dagshub
 dictdiffer==0.9.0
@@ -178,9 +170,9 @@ dvc-studio-client==0.22.0
 dvc-task==0.40.2
     # via dvc
 entrypoints==0.4
-    # via gto
-fastapi==0.116.1
-    # via mlflow-skinny
+    # via
+    #   gto
+    #   mlflow
 filelock==3.18.0
     # via iterative-telemetry
 flask==3.1.1
@@ -216,35 +208,24 @@ gitdb==4.0.12
 gitpython==3.1.45
     # via
     #   dagshub
-    #   mlflow-skinny
+    #   mlflow
     #   scmrepo
-google-auth==2.40.3
-    # via databricks-sdk
 gql[requests]==3.5.3
     # via dagshub
 grandalf==0.8
     # via dvc
-graphene==3.4.3
-    # via mlflow
 graphql-core==3.2.6
-    # via
-    #   gql
-    #   graphene
-    #   graphql-relay
-graphql-relay==3.2.0
-    # via graphene
+    # via gql
 graphviz==0.21
     # via catboost
 greenlet==3.2.3
     # via sqlalchemy
 gto==1.7.2
     # via dvc
-gunicorn==23.0.0
+gunicorn==21.2.0
     # via mlflow
 h11==0.16.0
-    # via
-    #   httpcore
-    #   uvicorn
+    # via httpcore
 httpcore==1.0.9
     # via httpx
 httpx==0.28.1
@@ -261,10 +242,8 @@ imbalanced-learn==0.12.4
     # via imblearn
 imblearn==0.0
     # via -r requirements.in
-importlib-metadata==8.7.0
-    # via
-    #   mlflow-skinny
-    #   opentelemetry-api
+importlib-metadata==7.2.1
+    # via mlflow
 iterative-telemetry==0.0.10
     # via dvc
 itsdangerous==2.2.0
@@ -273,6 +252,7 @@ jinja2==3.1.6
     # via
     #   -r requirements.in
     #   flask
+    #   mlflow
 jmespath==1.0.1
     # via
     #   aiobotocore
@@ -295,6 +275,8 @@ lxml==6.0.0
     # via dagshub-annotation-converter
 mako==1.3.10
     # via alembic
+markdown==3.9
+    # via mlflow
 markdown-it-py==3.0.0
     # via rich
 markupsafe==3.0.2
@@ -312,12 +294,8 @@ matplotlib==3.10.3
     #   mlflow
 mdurl==0.1.2
     # via markdown-it-py
-mlflow==3.2.0
+mlflow==2.10.0
     # via -r requirements.in
-mlflow-skinny==3.2.0
-    # via mlflow
-mlflow-tracing==3.2.0
-    # via mlflow
 multidict==6.6.3
     # via
     #   aiobotocore
@@ -329,7 +307,7 @@ narwhals==2.3.0
     # via plotly
 networkx==3.5
     # via dvc
-numpy==2.3.1
+numpy==1.26.4
     # via
     #   catboost
     #   contourpy
@@ -338,32 +316,23 @@ numpy==2.3.1
     #   matplotlib
     #   mlflow
     #   pandas
+    #   pyarrow
     #   scikit-learn
     #   scipy
     #   xgboost
 nvidia-nccl-cu12==2.27.7
     # via xgboost
+oauthlib==3.3.1
+    # via databricks-cli
 omegaconf==2.3.0
     # via
     #   dvc
     #   hydra-core
-opentelemetry-api==1.36.0
-    # via
-    #   mlflow-skinny
-    #   mlflow-tracing
-    #   opentelemetry-sdk
-    #   opentelemetry-semantic-conventions
-opentelemetry-sdk==1.36.0
-    # via
-    #   mlflow-skinny
-    #   mlflow-tracing
-opentelemetry-semantic-conventions==0.57b0
-    # via opentelemetry-sdk
 orjson==3.11.1
     # via
     #   dvc-data
     #   sqltrie
-packaging==25.0
+packaging==23.2
     # via
     #   build
     #   dvc
@@ -372,8 +341,7 @@ packaging==25.0
     #   kombu
     #   marshmallow
     #   matplotlib
-    #   mlflow-skinny
-    #   mlflow-tracing
+    #   mlflow
     #   plotly
 pandas==2.3.1
     # via
@@ -404,35 +372,24 @@ propcache==0.3.2
     # via
     #   aiohttp
     #   yarl
-protobuf==6.31.1
-    # via
-    #   mlflow-skinny
-    #   mlflow-tracing
+protobuf==4.25.8
+    # via mlflow
 psutil==7.0.0
     # via
     #   dvc
     #   flufl-lock
 psycopg2-binary==2.9.10
     # via -r requirements.in
-pyarrow==21.0.0
+pyarrow==15.0.2
     # via
     #   -r requirements.in
     #   mlflow
-pyasn1==0.6.1
-    # via
-    #   pyasn1-modules
-    #   rsa
-pyasn1-modules==0.4.2
-    # via google-auth
 pycparser==2.22
     # via cffi
 pydantic==2.11.7
     # via
     #   dagshub-annotation-converter
-    #   fastapi
     #   gto
-    #   mlflow-skinny
-    #   mlflow-tracing
 pydantic-core==2.33.2
     # via pydantic
 pydot==4.0.1
@@ -447,6 +404,8 @@ pygtrie==2.5.0
     #   dvc-data
     #   scmrepo
     #   sqltrie
+pyjwt==2.10.1
+    # via databricks-cli
 pyparsing==3.2.3
     # via
     #   dvc
@@ -463,28 +422,31 @@ python-dateutil==2.9.0.post0
     #   botocore
     #   celery
     #   dagshub
-    #   graphene
     #   matplotlib
     #   pandas
 python-dotenv==1.1.1
     # via dotenv
-pytz==2025.2
-    # via pandas
+pytz==2023.4
+    # via
+    #   mlflow
+    #   pandas
 pyyaml==6.0.2
     # via
     #   dagshub
     #   dagshub-annotation-converter
-    #   mlflow-skinny
+    #   mlflow
     #   omegaconf
+querystring-parser==1.2.4
+    # via mlflow
 requests==2.32.4
     # via
-    #   databricks-sdk
+    #   databricks-cli
     #   docker
     #   dvc
     #   dvc-studio-client
     #   gql
     #   iterative-telemetry
-    #   mlflow-skinny
+    #   mlflow
     #   requests-toolbelt
 requests-toolbelt==1.0.0
     # via gql
@@ -494,8 +456,6 @@ rich==14.1.0
     #   dvc
     #   gto
     #   typer
-rsa==4.9.1
-    # via google-auth
 ruamel-yaml==0.18.14
     # via
     #   dvc
@@ -538,8 +498,10 @@ shtab==1.7.2
 six==1.17.0
     # via
     #   catboost
+    #   databricks-cli
     #   flatten-dict
     #   python-dateutil
+    #   querystring-parser
     #   treelib
 smmap==5.0.2
     # via gitdb
@@ -553,13 +515,12 @@ sqlalchemy==2.0.41
     #   alembic
     #   mlflow
 sqlparse==0.5.3
-    # via mlflow-skinny
+    # via mlflow
 sqltrie==0.11.2
     # via dvc-data
-starlette==0.47.2
-    # via fastapi
 tabulate==0.9.0
     # via
+    #   databricks-cli
     #   dvc
     #   gto
 tenacity==9.1.2
@@ -588,16 +549,9 @@ typing-extensions==4.14.1
     #   asyncssh
     #   beautifulsoup4
     #   dagshub-annotation-converter
-    #   fastapi
-    #   graphene
-    #   mlflow-skinny
-    #   opentelemetry-api
-    #   opentelemetry-sdk
-    #   opentelemetry-semantic-conventions
     #   pydantic
     #   pydantic-core
     #   sqlalchemy
-    #   starlette
     #   typer
     #   typing-inspect
     #   typing-inspection
@@ -612,11 +566,10 @@ tzdata==2025.2
 urllib3==2.5.0
     # via
     #   botocore
+    #   databricks-cli
     #   docker
     #   dulwich
     #   requests
-uvicorn==0.35.0
-    # via mlflow-skinny
 vine==5.1.0
     # via
     #   amqp

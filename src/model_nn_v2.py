@@ -12,7 +12,6 @@ from sklearn.neural_network import MLPClassifier
 from imblearn.over_sampling import RandomOverSampler
 
 
-
 logger = logging.getLogger(__name__)
 
 def add_advanced_features(df):

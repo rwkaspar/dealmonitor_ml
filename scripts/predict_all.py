@@ -4,10 +4,17 @@ from datetime import datetime
 from sqlalchemy import create_engine
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from src.candidate_extractor import extract_all_candidates, extract_price_candidates
-from src.features import extract_price_features, clean_price_user
+# from src.candidate_extractor import extract_all_candidates, extract_price_candidates
+# from src.features import extract_price_features, clean_price_user
 from src.model_nn_v3 import build_feature_df
 from src.nn_predictor import load_model, predict_best_candidates_nn_from_row
+
+sys.path.append(os.path.abspath("dealmonitor/backend/src"))
+from dealmonitor.features.features import clean_price, extract_price_features
+from dealmonitor.price_logic.candidate_extractor import (
+    extract_all_candidates,
+    extract_price_candidates,
+)
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://dev_user:dev_password@localhost:5432/dev_db")
 engine = create_engine(DATABASE_URL)
@@ -20,13 +27,17 @@ print(f"🔢 {len(raw_df)} rows loaded.")
 model = load_model()
 
 # --- Prepare dataset ---
-raw_df["target"] = raw_df["price_user"].apply(clean_price_user)
+# raw_df["target"] = raw_df["price_user"].apply(clean_price_user)
+raw_df["target"] = raw_df["price_user"].apply(clean_price)
 raw_df = raw_df[raw_df["target"].notnull()]
 
 results = []
 df = pd.DataFrame()
 # go through each row, extract features, prepare for prediction and do the prediction
 for i, raw_row in enumerate(raw_df.itertuples()):
+    print(type(raw_row))
+    print(dir(raw_row))
+
     row = raw_row._asdict()  # convert namedtuple to dict
     # test = build_knn_training_rows(row)
     # extract candidates from the row

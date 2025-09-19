@@ -3,7 +3,9 @@ import pandas as pd
 from sklearn.metrics import mean_absolute_error
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from src.features import clean_price_user
+# from src.features import clean_price_user
+sys.path.append(os.path.abspath("dealmonitor/backend/src"))
+from dealmonitor.features.features import clean_price
 
 # Load latest predictions
 pred_dir = "predictions"
@@ -14,7 +16,8 @@ print(f"📊 Evaluating {path}...")
 df = pd.read_json(path, lines=True)
 
 # Cleanup: ensure proper float types
-df["price_user"] = df["price_user"].apply(clean_price_user)
+# df["price_user"] = df["price_user"].apply(clean_price_user)
+df["price_user"] = df["price_user"].apply(clean_price)
 
 df["predicted_price"] = pd.to_numeric(df["predicted_price"], errors="coerce")
 
@@ -38,7 +41,10 @@ def load_top_candidates(pred_path):
     with open(pred_path) as f:
         for line in f:
             row = json.loads(line)
-            row["price_user"] = clean_price_user(row["price_user"])
+
+            # row["price_user"] = clean_price_user(row["price_user"])
+            row["price_user"] = clean_price(row["price_user"])
+            
             top = row.get("top_candidates", [])
             values = [round(float(t[0]), 2) for t in top]
             row["top_values"] = values

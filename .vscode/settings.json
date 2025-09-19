@@ -1,0 +1,8 @@
+{
+  "python.autoComplete.extraPaths": [
+    "./dealmonitor/backend/src"
+  ],
+  "python.analysis.extraPaths": [
+    "./dealmonitor/backend/src"
+  ]
+}

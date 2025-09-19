@@ -5,8 +5,10 @@ import pandas as pd
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from src.features import clean_price_user
+# from src.features import clean_price_user
 
+sys.path.append(os.path.abspath("dealmonitor/backend/src"))
+from dealmonitor.features.features import clean_price
 
 # Load latest prediction file
 pred_dir = "predictions"
@@ -20,7 +22,8 @@ with open(path) as f:
 
 # Clean & format
 for row in data:
-    row["price_user_clean"] = clean_price_user(row.get("price_user"))
+    # row["price_user_clean"] = clean_price_user(row.get("price_user"))
+    row["price_user_clean"] = clean_price(row.get("price_user"))
     pred_price = row.get("predicted_price", None)
 
     try:
