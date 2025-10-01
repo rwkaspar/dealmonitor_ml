@@ -8,6 +8,8 @@ data/processed/*.jsonl
 models/nn_model_*.pkl
 models/knn_model.pkl
 models/price_model.pkl
+models/xgb_best*.pkl
+models/mlp_best*.pkl
 
 # predictions
 predictions/*.jsonl

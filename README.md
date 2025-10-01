@@ -1,6 +1,22 @@
 # dealmonitor_ml
 The ML Model to power the dealmonitor as well as the training and stuff.
 
+## Run a training session
+Because training takes time and ssh tends to stop processes when the connection times out, it is wisely recommended to use a tmux
+training session.
+
+```bash
+tmux new -s training_session
+# Starte Trainings script, e. g.:
+python train_nn_model.py
+```
+
+detach training session using 'ctrl + b' and afterwards 'd'
+
+reattach session using:
+```bash
+tmux attach -t training_session
+```
 
 ## Including the Dealmonitor Repository as a Submodule
 This project uses Git submodules to include the Dealmonitor repository within the dealmonitor_ml project. Git submodules allow you to keep a separate repository as a subdirectory in your project while maintaining independent versioning.
