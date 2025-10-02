@@ -110,23 +110,23 @@ def train_nn_model(
         # from lightgbm import LGBMClassifier
 
         models = {
-            "mlp": MLPClassifier(),
+            # "mlp": MLPClassifier(),
             "xgb": XGBClassifier(),
             # "lgbm": LGBMClassifier()
         }
 
         param_grids = {
             # Model: mlp, Best F1: 0.8441, Params: {'activation': 'tanh', 'alpha': 0.001, 'hidden_layer_sizes': (128, 64), 'learning_rate_init': 0.001, 'max_iter': 5000, 'random_state': 42, 'solver': 'adam'}
-            "mlp": {
-                "hidden_layer_sizes": [(64,), (64, 32), (128, 64), (128, 64, 32), (256, 128, 64)],
-                # (32,)
-                'activation': ['relu', 'tanh', 'logistic'],  # 'logistic'
-                'solver': ['adam', 'sgd'],  # 'lbfgs', 'sgd'
-                'alpha': [0.0001, 0.001, 0.01],
-                'learning_rate_init': [0.0001, 0.001],  # 0.01
-                "max_iter": [10000, 5000, 1000, 100],  # seams to have no impact
-                "random_state": [42],
-            },
+            # "mlp": {
+            #     "hidden_layer_sizes": [(64,), (64, 32), (128, 64), (128, 64, 32), (256, 128, 64)],
+            #     # (32,)
+            #     'activation': ['relu', 'tanh', 'logistic'],  # 'logistic'
+            #     'solver': ['adam', 'sgd'],  # 'lbfgs', 'sgd'
+            #     'alpha': [0.0001, 0.001, 0.01],
+            #     'learning_rate_init': [0.0001, 0.001],  # 0.01
+            #     "max_iter": [10000, 5000, 1000, 100],  # seams to have no impact
+            #     "random_state": [42],
+            # },
             # Model: xgb, Best F1: 0.8267, Params: {'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_depth': 10, 'n_estimators': 500, 'random_state': 42, 'subsample': 0.6}
             "xgb": {
                 "n_estimators": [100, 250, 500, 1000],
