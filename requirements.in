@@ -14,5 +14,6 @@ pip-tools
 psycopg2-binary
 pyarrow
 scikit-learn==1.6.1  #1.7.2  # no support for 1.7.1 yet by imblearn
+seaborn
 SQLAlchemy
 xgboost

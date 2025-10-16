@@ -292,6 +292,7 @@ matplotlib==3.10.3
     #   -r requirements.in
     #   catboost
     #   mlflow
+    #   seaborn
 mdurl==0.1.2
     # via markdown-it-py
 mlflow==2.10.0
@@ -319,6 +320,7 @@ numpy==1.26.4
     #   pyarrow
     #   scikit-learn
     #   scipy
+    #   seaborn
     #   xgboost
 nvidia-nccl-cu12==2.27.7
     # via xgboost
@@ -350,6 +352,7 @@ pandas==2.3.1
     #   dagshub
     #   dagshub-annotation-converter
     #   mlflow
+    #   seaborn
 pathspec==0.12.1
     # via
     #   dvc
@@ -483,6 +486,8 @@ scmrepo==3.5.1
     # via
     #   dvc
     #   gto
+seaborn==0.13.2
+    # via -r requirements.in
 semver==3.0.4
     # via
     #   dagshub
